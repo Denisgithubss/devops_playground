@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out source code...'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running unit tests with pytest...'
+            }
+        }
+
+        stage('Secret Scan') {
+            steps {
+                echo 'Scanning for secrets with Gitleaks...'
+            }
+        }
+
+        stage('Build Image') {
+            steps {
+                echo 'Building Docker image...'
+            }
+        }
+
+        stage('Trivy Scan') {
+            steps {
+                echo 'Scanning image for vulnerabilities with Trivy...'
+            }
+        }
+
+        stage('Helm Lint') {
+            steps {
+                echo 'Linting Helm charts...'
+            }
+        }
+
+        stage('Deploy manual placeholder') {
+            steps {
+                input message: 'Deploy to production?', ok: 'Deploy'
+                echo 'Deploying to Kubernetes...'
+            }
+        }
+    }
+}
