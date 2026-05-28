@@ -13,7 +13,9 @@ RUN groupadd -r appuser && useradd -r -g appuser appuser
 
 # Copy requirements.txt and install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
+    pip install --no-cache-dir -r requirements.txt
+
 
 # Copy the rest of the application code
 COPY . .
