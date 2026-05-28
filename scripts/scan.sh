@@ -40,3 +40,5 @@ if command -v trivy &> /dev/null; then
 else
     echo -e "${RED}Skipping Trivy Image scan (not installed)${NC}"
 fi
+
+echo -e "\n${GREEN}Scan process completed!${NC}"
