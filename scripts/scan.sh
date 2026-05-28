@@ -29,7 +29,7 @@ fi
 
 echo -e "\n${YELLOW}--- Running Trivy Config (IaC) ---${NC}"
 if command -v trivy &> /dev/null; then
-    trivy config .
+    trivy config . --skip-dirs .venv,app/.venv
 else
     echo -e "${RED}Skipping Trivy Config scan (not installed)${NC}"
 fi
