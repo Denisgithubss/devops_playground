@@ -1,0 +1,58 @@
+stages:
+  - lint
+  - test
+  - secret_scan
+  - sast
+  - build
+  - image_scan
+  - helm_lint
+  - deploy_manual
+
+variables:
+  PYTHON_IMAGE: "python:3.12-slim"
+  DOCKER_IMAGE: "docker:latest"
+
+lint:
+  stage: lint
+  image: $PYTHON_IMAGE
+  script:
+    - echo "Running flake8 linting..."
+
+test:
+  stage: test
+  image: $PYTHON_IMAGE
+  script:
+    - echo "Running pytest..."
+
+secret_scan:
+  stage: secret_scan
+  script:
+    - echo "Running gitleaks or trufflehog..."
+
+sast:
+  stage: sast
+  script:
+    - echo "Running Bandit or Semgrep for static analysis..."
+
+build:
+  stage: build
+  image: $DOCKER_IMAGE
+  script:
+    - echo "Building docker image: demo-app:latest"
+
+image_scan:
+  stage: image_scan
+  script:
+    - echo "Running Trivy scan on demo-app:latest..."
+
+helm_lint:
+  stage: helm_lint
+  image: alpine/helm:latest
+  script:
+    - echo "Running helm lint on charts/demo-app..."
+
+deploy_manual:
+  stage: deploy_manual
+  script:
+    - echo "Deploying to production environment..."
+  when: manual
