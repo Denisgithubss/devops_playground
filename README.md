@@ -1,4 +1,4 @@
-# DevOps Portfolio Lab
+# DevSecOps Portfolio Lab
 
 A comprehensive, interview-ready portfolio demonstrating DevSecOps best practices, Infrastructure as Code, and Kubernetes orchestration.
 
@@ -8,51 +8,62 @@ See [docs/architecture.md](docs/architecture.md) for more details.
 
 ```mermaid
 graph LR
-    Dev[Developer] --> Git[Git]
-    Git --> CI[CI/CD Pipeline]
+    Dev[Developer] --> Git[GitHub]
+    Git --> CI[GitHub Actions]
     CI --> Security[Security Scans]
-    Security --> Deploy[K8s Deployment]
+    Security --> Build[Docker Build]
+    Build --> Deploy[K8s Deployment]
+    Deploy --> Runtime[Falco/Kyverno]
 ```
 
 ## 📂 Project Structure
 
-- `app/`: FastAPI demo application.
-- `terraform/`: Infrastructure provisioning (Yandex Cloud).
-- `ansible/`: Configuration management (k3s installation).
-- `helm/`: Kubernetes deployment manifests.
-- `k8s/`: Low-level manifests (Namespace, NetworkPolicy, Kyverno).
-- `security/`: Security configurations and policies.
+- `app/`: FastAPI microservice with health/metrics endpoints.
+- `.github/workflows/`: Production-grade GitHub Actions CI pipeline.
+- `scripts/scan.sh`: Unified local DevSecOps scanning script.
+- `helm/demo-app/`: Security-hardened Helm chart (non-root, read-only FS).
+- `k8s/`: Governance layer with Kyverno policies and NetworkPolicies.
+- `terraform/`: IaC skeletons for Yandex Cloud provisioning.
+- `ansible/`: Configuration management for k3s clusters.
+- `security/`: Configuration for Falco, Gitleaks, and Checkov.
 
-## 🚀 Quick Start
+## 🚀 Key Features
 
-### 1. Application (Docker)
+### 1. Automated CI/CD Pipeline
+- **GitHub Actions**: Fully automated pipeline with Linting, Testing, and Security gates.
+- **Fail-Fast Security**: Pipeline fails if Gitleaks (secrets), Trivy (CVEs), or Checkov (IaC) detect issues.
+
+### 2. "Shift Left" Security
+- **Local Scanning**: Unified `scripts/scan.sh` for developers to run Gitleaks, Trivy, and Checkov locally.
+- **IaC Hardening**: Terraform manifests validated against security benchmarks.
+
+### 3. K8s Governance & Runtime
+- **Kyverno**: Native policy engine enforcing resource limits and non-root execution.
+- **Falco**: Runtime security monitoring with custom rules for detecting suspicious activity.
+- **NetworkPolicy**: Default-deny posture for zero-trust networking.
+
+## 🛠 Usage
+
+### Local Security Scan
 ```bash
-cd app
-docker build -t demo-app:latest .
-docker run -p 8000:8000 demo-app:latest
+./scripts/scan.sh all
 ```
 
-### 2. Infrastructure (Terraform)
+### Application Health Check
 ```bash
-cd terraform
-terraform init
-terraform apply
+curl http://localhost:8000/health
 ```
 
-### 3. Orchestration (Helm)
+### K8s Policy Audit
 ```bash
-cd helm
-helm install demo-app ./demo-app --values ./demo-app/values.yaml
+kubectl get policyreport -A
 ```
 
-## 🛡 Security
-- Secret Scanning (Gitleaks)
-- SAST (Static Analysis)
-- Image Scanning (Trivy)
-- Policy Enforcement (Kyverno)
-
-## ⚠️ Cloud Cost Warning
-Provisioning resources on Yandex Cloud may incur costs. Always run `terraform destroy` when finished.
+## 🎤 Interview Positioning
+This project is designed to demonstrate:
+- **Automation First**: Moving from manual checks to automated GitHub Actions.
+- **Security-as-Code**: Managing Falco rules and Kyverno policies alongside application code.
+- **Operational Rigor**: Comprehensive logging, metrics, and health checks.
 
 ---
 *Created as part of a DevOps Learning Path.*
