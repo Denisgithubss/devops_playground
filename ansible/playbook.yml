@@ -1,0 +1,18 @@
+- name: Install k3s on lab nodes
+  hosts: lab_nodes
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install curl
+      package:
+        name: curl
+        state: present
+
+    - name: Install k3s
+      shell: curl -sfL https://get.k3s.io | sh -
+      args:
+        creates: /usr/local/bin/k3s
