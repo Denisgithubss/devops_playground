@@ -1,0 +1,17 @@
+- macro: container
+  condition: container.id != host
+
+- macro: spawned_process
+  condition: evt.type = execve and evt.dir = <
+
+- rule: Shell in Container
+  desc: Detect a shell spawned inside a container
+  condition: container and spawned_process and proc.name in (bash, sh, zsh)
+  output: "Shell spawned in container (user=%user.name container_id=%container.id proc_name=%proc.name)"
+  priority: WARNING
+
+- rule: Write to /etc
+  desc: Detect any write to /etc
+  condition: fd.name startswith /etc and evt.type in (open, openat) and evt.arg.flags contains O_WRONLY
+  output: "Write attempt to /etc (user=%user.name command=%proc.cmdline file=%fd.name)"
+  priority: WARNING
