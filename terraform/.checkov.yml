@@ -1,0 +1,24 @@
+# Checkov configuration file for IaC security scanning
+# Documentation: https://www.checkov.io/2.Concepts/Configuration%20File.html
+
+# Directory to scan
+directory:
+  - "terraform"
+
+# Frameworks to include
+framework:
+  - terraform
+
+# List of checks to skip for the lab environment
+skip-check:
+  # Ensure security group does not contain allow-all rules (e.g., 0.0.0.0/0)
+  # Skipped because the lab requires SSH/API access from anywhere for simplicity
+  - CKV_YC_19
+  # Ensure compute instance does not have a public IP address
+  # Skipped as lab instances need to be reachable over the internet
+  - CKV_YC_2
+
+# Output settings
+output: cli
+quiet: true
+soft-fail: false
