@@ -19,3 +19,24 @@ check_tool() {
 
 check_tool "gitleaks"
 check_tool "trivy"
+
+echo -e "\n${YELLOW}--- Running Gitleaks (Secrets) ---${NC}"
+if command -v gitleaks &> /dev/null; then
+    gitleaks detect --source . -v
+else
+    echo -e "${RED}Skipping Gitleaks scan (not installed)${NC}"
+fi
+
+echo -e "\n${YELLOW}--- Running Trivy Config (IaC) ---${NC}"
+if command -v trivy &> /dev/null; then
+    trivy config .
+else
+    echo -e "${RED}Skipping Trivy Config scan (not installed)${NC}"
+fi
+
+echo -e "\n${YELLOW}--- Running Trivy Image (demo-app:local) ---${NC}"
+if command -v trivy &> /dev/null; then
+    trivy image demo-app:local
+else
+    echo -e "${RED}Skipping Trivy Image scan (not installed)${NC}"
+fi
