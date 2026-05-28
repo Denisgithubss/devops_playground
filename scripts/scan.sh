@@ -7,3 +7,15 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 echo -e "${YELLOW}Starting Local Security Scans...${NC}"
+
+check_tool() {
+    if ! command -v $1 &> /dev/null; then
+        echo -e "${RED}Warning: $1 is not installed.${NC}"
+        return 1
+    fi
+    echo -e "${GREEN}Detected $1 version: $($1 version 2>/dev/null || $1 --version)${NC}"
+    return 0
+}
+
+check_tool "gitleaks"
+check_tool "trivy"
