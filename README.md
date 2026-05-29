@@ -42,17 +42,22 @@ graph LR
 ### 1. Automated CI/CD Pipeline
 - **GitHub Actions**: Fully automated pipeline with Linting, Testing, and Security gates.
 - **Fail-Fast Security**: Pipeline fails if Gitleaks (secrets), Trivy (CVEs), or Checkov (IaC) detect issues.
+- **Cost Management**: **Infracost** provides cloud cost estimates directly in the CI pipeline for "Shift Left" financial visibility.
 
-### 2. "Shift Left" Security
+### 2. GitOps & Secret Management
+- **GitOps Deployment**: **ArgoCD** automates deployment and ensures the cluster state matches the repository.
+- **Secret Management**: **External Secrets Operator (ESO)** fetches sensitive data from external providers like HashiCorp Vault.
+
+### 3. "Shift Left" Security
 - **Local Scanning**: Unified `scripts/scan.sh` for developers to run Gitleaks, Trivy, and Checkov locally.
 - **IaC Hardening**: Terraform manifests validated against security benchmarks.
 
-### 3. K8s Governance & Runtime
+### 4. K8s Governance & Runtime
 - **Kyverno**: Native policy engine enforcing resource limits and non-root execution.
 - **Falco**: Runtime security monitoring with custom rules for detecting suspicious activity.
 - **NetworkPolicy**: Default-deny posture for zero-trust networking.
 
-### 4. Observability & Monitoring
+### 5. Observability & Monitoring
 - **Prometheus**: Application instrumented to expose `/metrics` for scraping via ServiceMonitor.
 - **Grafana**: Pre-configured dashboard (`monitoring/grafana-dashboard.json`) for visualizing application health and performance.
 
@@ -71,6 +76,13 @@ curl http://localhost:8000/health
 ### K8s Policy Audit
 ```bash
 kubectl get policyreport -A
+```
+
+### Pre-commit Hooks
+Install pre-commit hooks to ensure code quality and security checks run before every commit:
+```bash
+pip install pre-commit
+pre-commit install
 ```
 
 ## 🎤 Interview Positioning
