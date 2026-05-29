@@ -10,10 +10,19 @@ See [docs/architecture.md](docs/architecture.md) for more details.
 graph LR
     Dev[Developer] --> Git[GitHub]
     Git --> CI[GitHub Actions]
-    CI --> Security[Security Scans]
-    Security --> Build[Docker Build]
-    Build --> Deploy[K8s Deployment]
-    Deploy --> Runtime[Falco/Kyverno]
+    subgraph "CI Pipeline"
+        CI --> Scan[Security Scans]
+        Scan --> Build[Docker Build]
+        Build --> Cost[Infracost]
+    end
+    Cost --> Git
+    Git --> Argo[ArgoCD]
+    Argo --> K8s[Kubernetes Cluster]
+    subgraph "K8s Runtime"
+        K8s --> ESO[External Secrets]
+        ESO --> Vault[(Vault)]
+        K8s --> Sec[Falco/Kyverno]
+    end
 ```
 
 ## 📂 Project Structure
