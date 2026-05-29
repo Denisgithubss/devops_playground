@@ -33,3 +33,7 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls: []
+
+metrics:
+  enabled: true
+

@@ -44,3 +44,7 @@ graph TD
 - **Kyverno**: Enforces "Secure by Default" (no privileged containers, require non-root).
 - **Falco**: Detects shell execution in containers or unusual file access at runtime.
 - **NetworkPolicy**: Implements micro-segmentation to limit lateral movement.
+
+### 5. Observability
+- **Prometheus**: Scrapes application metrics via ServiceMonitor.
+- **Grafana**: Visualizes telemetry using the pre-built `monitoring/grafana-dashboard.json`.

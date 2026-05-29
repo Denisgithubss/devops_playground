@@ -42,6 +42,10 @@ graph LR
 - **Falco**: Runtime security monitoring with custom rules for detecting suspicious activity.
 - **NetworkPolicy**: Default-deny posture for zero-trust networking.
 
+### 4. Observability & Monitoring
+- **Prometheus**: Application instrumented to expose `/metrics` for scraping via ServiceMonitor.
+- **Grafana**: Pre-configured dashboard (`monitoring/grafana-dashboard.json`) for visualizing application health and performance.
+
 ## 🛠 Usage
 
 ### Local Security Scan

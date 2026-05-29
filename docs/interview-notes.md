@@ -21,3 +21,7 @@
 ## 5. Lessons Learned
 - **Security is a Process**: It's not just about tools; it's about the feedback loop between scanning, reporting, and fixing.
 - **IaC Drift**: Infrastructure should be purely defined in code. Manual changes in the cloud console are "Technical Debt" that breaks automation.
+
+## 6. Observability & Application Health
+- **Concept**: Deploying is not the end; we must monitor the application in production.
+- **Implementation**: Instrumented the application to expose Prometheus metrics. Added a ServiceMonitor for auto-discovery and created a Grafana dashboard (`monitoring/grafana-dashboard.json`) to visualize performance and health in real-time.
