@@ -34,7 +34,8 @@ graph LR
 - `k8s/`: Governance layer with Kyverno policies and NetworkPolicies.
 - `terraform/`: IaC skeletons for Yandex Cloud provisioning.
 - `ansible/`: Configuration management for k3s clusters.
-- `security/`: Configuration for Falco, Gitleaks, and Checkov.
+- `argocd/`: GitOps application manifests for ArgoCD.
+- `security/`: Configuration for Falco rules, Gitleaks, and quality gates.
 
 ## 🚀 Key Features
 
