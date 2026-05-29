@@ -25,3 +25,8 @@
 ## 6. Observability & Application Health
 - **Concept**: Deploying is not the end; we must monitor the application in production.
 - **Implementation**: Instrumented the application to expose Prometheus metrics. Added a ServiceMonitor for auto-discovery and created a Grafana dashboard (`monitoring/grafana-dashboard.json`) to visualize performance and health in real-time.
+
+## 7. Secrets Management (External Secrets Operator)
+- **Problem**: Storing static K8s secrets or putting them in Helm values is insecure, risks exposure in source control, and makes rotation difficult.
+- **Solution**: We use External Secrets Operator (ESO) to dynamically fetch credentials from a centralized enterprise SecretStore (like HashiCorp Vault or AWS Secrets Manager) and sync them into the cluster.
+- **Benefit**: Decouples secret management from application deployment. Developers never see the production secrets, rotation is automated, and the cluster is populated dynamically with `demo-app-db-secret` without exposing raw values in Git.
