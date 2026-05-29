@@ -4,8 +4,12 @@ This directory contains Terraform skeletons for provisioning infrastructure on Y
 
 ## Warning: Cost Management
 
-**IMPORTANT:** Provisioning resources on Yandex Cloud (or any cloud provider) incurs costs. 
+**IMPORTANT:** Provisioning resources on Yandex Cloud (or any cloud provider) incurs costs.
 Always remember to destroy your infrastructure when you are done with your experiments.
+
+## Cost Management
+
+This project uses **Infracost** in the GitHub Actions pipeline to estimate the cost of infrastructure changes defined in these Terraform manifests. This allows for "Shift Left" cost visibility before resources are provisioned.
 
 ## Usage
 
